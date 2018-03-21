@@ -8,11 +8,24 @@ import { AboutPage } from '../pages/about/about';
 import { TabsControllerPage } from '../pages/tabs-controller/tabs-controller';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
-import { PagePage } from '../pages/page/page';
+
 
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+
+let pages = [
+  MyApp,
+  SmallExpenseTrackerPage,
+  HistoryPage,
+  AboutPage,
+  TabsControllerPage,
+  LoginPage,
+  SignupPage
+];
+export function entryComponents() {
+  return pages;
+}
 
 @NgModule({
   declarations: [
@@ -22,8 +35,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AboutPage,
     TabsControllerPage,
     LoginPage,
-    SignupPage,
-    PagePage
+    SignupPage
   ],
   imports: [
     BrowserModule,
@@ -37,13 +49,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AboutPage,
     TabsControllerPage,
     LoginPage,
-    SignupPage,
-    PagePage
+    SignupPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
-export class AppModule {}
+
+
+export class AppModule { }

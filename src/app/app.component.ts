@@ -6,7 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 
 import { SmallExpenseTrackerPage } from '../pages/small-expense-tracker/small-expense-tracker';
-
+import { TabsControllerPage } from '../pages/tabs-controller/tabs-controller';
 
 
 @Component({
@@ -14,7 +14,7 @@ import { SmallExpenseTrackerPage } from '../pages/small-expense-tracker/small-ex
 })
 export class MyApp {
   @ViewChild(Nav) navCtrl: Nav;
-    rootPage:any = SmallExpenseTrackerPage;
+    rootPage:any = TabsControllerPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
