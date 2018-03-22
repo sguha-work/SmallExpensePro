@@ -1,3 +1,37 @@
 page-small-expense-tracker {
-
+    h1 {
+        text-align: center;
+    }
+    h4 {
+        text-align: center;
+    }
+    .active {
+        color: red;
+        font-weight: bold;
+        opacity: 0.5;
+    }
+    .activity {
+        width: 31%;
+        float: left;
+        margin: 1%;
+        border-top: 0px !important;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    .btn_number {
+        width: 18%;
+        margin: 1%;
+        float: left;
+        clear: none;
+        border-radius: 20px;
+    }
+    .homeInputStyle {
+        margin-top: 2%;
+        margin-bottom: 2%;
+        width: 98%;
+        margin-left: 1%;
+    }
+    .button-md-assertive {
+        background-color: #ef473a;
+    }
 }

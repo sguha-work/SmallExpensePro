@@ -4,10 +4,11 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { Events } from 'ionic-angular';
 import { MyApp } from './app.component';
 
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {File} from '@ionic-native/file';
-import {HttpModule} from '@angular/http';
+//import {HttpModule} from '@angular/http';
 import { DatePicker } from '@ionic-native/date-picker';
 import { EmailComposer } from '@ionic-native/email-composer';
 
@@ -32,18 +33,18 @@ import { SignupPage } from '../pages/signup/signup';
 
 
 
-let pages = [
-  MyApp,
-  SmallExpenseTrackerPage,
-  HistoryPage,
-  AboutPage,
-  TabsControllerPage,
-  LoginPage,
-  SignupPage
-];
-export function entryComponents() {
-  return pages;
-}
+// let pages = [
+//   MyApp,
+//   SmallExpenseTrackerPage,
+//   HistoryPage,
+//   AboutPage,
+//   TabsControllerPage,
+//   LoginPage,
+//   SignupPage
+// ];
+// export function entryComponents() {
+//   return pages;
+// }
 
 @NgModule({
   declarations: [
