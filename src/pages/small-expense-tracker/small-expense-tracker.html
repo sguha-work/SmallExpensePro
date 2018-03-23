@@ -1,56 +1,61 @@
 <ion-content padding id="page2" style="background-color:#4480E9;">
-  <h3 id="smallExpenseTracker-heading3" style="color:#67E79A;text-align:center;">
-    Home
-  </h3>
-  <div id="home-markdown1" class="show-list-numbers-and-dots">
-    <p style="color:#000000; margin: 0; margin-bottom: 3px; padding: 0;">
-        Today's expense &nbsp;
-        <strong style="color: red; font-size: 20px;">
-    {{model.todaysTotalExpense}}
-  </strong> rupees so far.
-    </p>
-</div>
-<div id="div_alertDiv" class="show-list-numbers-and-dots">
-    <p style="color:#000000; margin: 0; padding: 0; margin-bottom: 2px;">
-        Daily expense limit is <strong style=" font-size: 20px;">{{alert.alertAmount}}</strong> rupees
+    <h3 id="smallExpenseTracker-heading3" style="color:#67E79A;text-align:center;">
+        Home
+    </h3>
+    <div id="home-markdown1" class="show-list-numbers-and-dots">
+        <p style="color:#000000; margin: 0; margin-bottom: 3px; padding: 0;">
+            Today's expense &nbsp;
+            <strong style="color: red; font-size: 20px;">
+                {{model.todaysTotalExpense}}
+            </strong> rupees so far.
+        </p>
+    </div>
+    <div id="div_alertDiv" class="show-list-numbers-and-dots">
+        <p style="color:#000000; margin: 0; padding: 0; margin-bottom: 2px;">
+            Daily expense limit is
+            <strong style=" font-size: 20px;">{{alert.alertAmount}}</strong> rupees
 
 
-        <label *ngIf="!alert.showAlert" style="color:#000000; margin: 0; padding: 0;">
-        You can still spent <strong style=" font-size: 20px;">{{alert.safeAmount}}</strong> rupees
+            <label *ngIf="!alert.showAlert" style="color:#000000; margin: 0; padding: 0;">
+                You can still spent
+                <strong style=" font-size: 20px;">{{alert.safeAmount}}</strong> rupees
 
-        </label>
-        <label *ngIf="alert.showAlert" style="color:#000000; margin: 0; padding: 0;">
-            You spent <strong style="color: red; font-size: 20px;">{{alert.extraSpent}} </strong> rupees extra beyond limit
+            </label>
+            <label *ngIf="alert.showAlert" style="color:#000000; margin: 0; padding: 0;">
+                You spent
+                <strong style="color: red; font-size: 20px;">{{alert.extraSpent}} </strong> rupees extra beyond limit
 
-        </label>
-    </p>
-</div>
-<div id="home-markdown1" class="show-list-numbers-and-dots">
-    <p style="color:#000000; margin: 0; margin-bottom: 3px; padding: 0;">
-        <strong>
-    Tap to select type of expense
-  </strong>
-    </p>
-</div>
-<ion-item (click)="tagClicked($event)" (press)="changeTagTitle(tag.name)" *ngFor="let tag of tagData" class="activity" color="positive" data-item="tag">
-    {{tag.name}}
-    <ion-icon name="{{tag.icon}}" item-right></ion-icon>
-</ion-item>
+            </label>
+        </p>
+    </div>
+    <div id="home-markdown1" class="show-list-numbers-and-dots">
+        <p style="color:#000000; margin: 0; margin-bottom: 3px; padding: 0;">
+            <strong>
+                Tap to select type of expense
+            </strong>
+        </p>
+    </div>
+    <ion-item style="margin: 1.12%;" (click)="tagClicked($event)" (press)="changeTagTitle(tag.name)" *ngFor="let tag of tagData"
+        class="activity" color="positive" data-item="tag">
+        {{tag.name}}
+        <ion-icon name="{{tag.icon}}" item-right></ion-icon>
+    </ion-item>
 
-<ion-item id="home-input1" class="homeInputStyle">
-    <ion-input type="text" onclick="return false;" [(ngModel)]="model.amount" readonly="true" placeholder="Tap number to enter amount"></ion-input>
-</ion-item>
-<button *ngFor="let number of numberData" (click)="numberClicked($event)" class="btn_number" ion-button color="positive" data-item="number" block>
-  {{number.label}}
-</button>
+    <ion-item id="home-input1" class="homeInputStyle">
+        <ion-input type="text" onclick="return false;" [(ngModel)]="model.amount" readonly="true" placeholder="Tap number to enter amount"></ion-input>
+    </ion-item>
+    <button *ngFor="let number of numberData" (click)="numberClicked($event)" class="btn_number" ion-button color="positive"
+        data-item="number" block>
+        {{number.label}}
+    </button>
 
-<ion-item id="home-textarea1">
-    <ion-textarea [(ngModel)]="model.description" placeholder="Enter description if you want"></ion-textarea>
-</ion-item>
-<button (click)="submitInput()" ion-button color="positive" block>
-  Tap me to submit
-</button>
-<button (click)="resetInputs()" ion-button color="assertive" block>
-  Tap me to reset
-</button>
+    <ion-item id="home-textarea1">
+        <ion-textarea [(ngModel)]="model.description" placeholder="Enter description if you want"></ion-textarea>
+    </ion-item>
+    <button (click)="submitInput()" ion-button color="positive" block>
+        Tap me to submit
+    </button>
+    <button (click)="resetInputs()" ion-button color="assertive" block>
+        Tap me to reset
+    </button>
 </ion-content>
