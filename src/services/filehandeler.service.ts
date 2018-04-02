@@ -7,11 +7,6 @@ const rootFolderName = "SmallExpensePro";
 @Injectable()
 export class FileHandeler {
     constructor(private file: File, private platform: Platform) {
-        // this.checkAndCreateInitialDirectories().then((prepareMessageData) => {
-
-        // }).catch(() => {
-        //     this.platform.exitApp();;
-        // });
         this.checkAndSetPlatform();
     }
 
@@ -23,10 +18,16 @@ export class FileHandeler {
         }
     }
 
-    public getCurrentDataFileName(): string {
+    public getDataFileName(date?: "string"): string {
         let today = new Date();
         let dateString: string;
-        dateString = (today.getDate()).toString() + '-' + (today.getMonth() + 1).toString() + '-' + today.getFullYear().toString();
+        if(typeof date === "undefined") {
+            dateString = (today.getDate()).toString() + '-' + (today.getMonth() + 1).toString() + '-' + today.getFullYear().toString()+".data";
+        } else {
+            let dateObject = new Date(date);
+            dateString = (dateObject.getDate()).toString() + '-' + (dateObject.getMonth() + 1).toString() + '-' + dateObject.getFullYear().toString()+".data";
+        }
+        
         return dateString;
     }
 

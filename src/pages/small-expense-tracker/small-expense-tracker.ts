@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AfterViewInit } from '@angular/core';
+import { Platform } from 'ionic-angular';
 import * as $ from 'jquery';
 
 import { FileHandeler } from './../../services/filehandeler.service';
@@ -19,8 +20,8 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
   public numberData: any;
   private model: any;
   private alert: any;
-  constructor(public navCtrl: NavController, private tagService: TagService, private file: FileHandeler, private event: Events) {
-    
+  constructor(public navCtrl: NavController, private tagService: TagService, private file: FileHandeler, private event: Events, private platform: Platform) {
+
     this.model = {
       reason: "",
       amount: "",
@@ -29,13 +30,22 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
     };
     this.alert = {};
     this.alert.safeAmount = 0;
-    this.event.subscribe('file:data:updated', () => {
-      this.refreshHomePageView();
+    // this.event.subscribe('file:data:updated', () => {
+    //   this.refreshHomePageView();
+    // });
+    // this.event.subscribe('file:config:updated', () => {
+    //   this.refreshHomePageView();
+    // });
+    this.platform.ready().then(() => {
+      this.file.checkAndCreateInitialDirectories().then(() => {
+        this.getTodaysTotalExpense();
+        this.checkIfAlertExistsAndMakechanges();
+        this.loadNumbers();
+        this.loadTags();
+      }).catch(() => {
+
+      });
     });
-    this.event.subscribe('file:config:updated', () => {
-      this.refreshHomePageView();
-    });
-    //this.checkAndCreateSimInfoFileIfNotExists();
   }
 
 
@@ -130,7 +140,7 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
 
   public submitInput() {
     if (this.model.description !== "") {
-      this.file.writeFile(this.file.getCurrentDataFileName(), JSON.stringify(this.model)).then((res) => {
+      this.file.writeFile(this.file.getDataFileName(), JSON.stringify(this.model)).then((res) => {
         if (res) {
           alert("Succesfully submitted data");
           this.resetInputs();
@@ -182,18 +192,12 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
 
   ngAfterViewInit() {
     window.setTimeout(() => {
-      this.file.checkAndCreateInitialDirectories().then(() => {
-        alert("success");
-      }).catch(() => {
-        alert("failed");
-      });
-    }, 1000);
+
+    }, 100);
     window.setTimeout(() => {
-      this.getTodaysTotalExpense();
-      this.checkIfAlertExistsAndMakechanges();
-      this.loadTags();
-      this.loadNumbers();
-    }, 2000);
+
+
+    }, 500);
 
   }
 
