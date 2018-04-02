@@ -14,12 +14,8 @@ import { EmailComposer } from '@ionic-native/email-composer';
 
 // importing self created services
 import { FileHandeler } from './../services/filehandeler.service';
-import { Common } from './../services/common.service';
-import { Database } from './../services/database.service';
-import { Alert } from './../services/alert.service';
-import { Expense } from './../services/expense.service';
 import { TagService } from './../services/tag.service';
-import { NumberService } from './../services/number.service';
+
 
 // importing self created pages
 import { SmallExpenseTrackerPage } from '../pages/small-expense-tracker/small-expense-tracker';
@@ -78,12 +74,9 @@ import { SignupPage } from '../pages/signup/signup';
     EmailComposer,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     TagService,
-    NumberService,
+    
     FileHandeler,
-    Common,
-    Database,
-    Expense,
-    Alert,
+    
     DatePicker,
     Events
   ]

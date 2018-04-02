@@ -5,9 +5,6 @@ import * as $ from 'jquery';
 
 import { FileHandeler } from './../../services/filehandeler.service';
 import { TagService } from './../../services/tag.service';
-import { NumberService } from './../../services/number.service';
-import { Expense } from './../../services/expense.service';
-import { Alert } from './../../services/alert.service';
 import { Events } from 'ionic-angular';
 
 //let $:any;
@@ -22,9 +19,8 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
   public numberData: any;
   private model: any;
   private alert: any;
-  constructor(public navCtrl: NavController, private tagService: TagService, private numberService: NumberService, private file: FileHandeler, private expense: Expense, private alertHandler: Alert, private event: Events) {
-    this.loadTags();
-    this.loadNumbers();
+  constructor(public navCtrl: NavController, private tagService: TagService, private file: FileHandeler, private event: Events) {
+    
     this.model = {
       reason: "",
       amount: "",
@@ -50,18 +46,45 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
   }
 
   private loadNumbers() {
-    this.numberService.getNumberData().then((data) => {
-      this.numberData = data;
-    }, () => {
-      alert("error occured")
-    });
+
+    this.numberData = JSON.parse(`[{
+          "label": "0"
+      },
+      {
+          "label": "1"
+      },
+      {
+          "label": "2"
+      },
+      {
+          "label": "3"
+      },
+      {
+          "label": "4"
+      },
+      {
+          "label": "5"
+      },
+      {
+          "label": "6"
+      },
+      {
+          "label": "7"
+      },
+      {
+          "label": "8"
+      },
+      {
+          "label": "9"
+      }
+    ]`);
   }
 
   private loadTags(): void {
     this.tagService.getTagData().then((data) => {
       this.tagData = data;
-    }, () => {
-      alert("Error occured");
+    }, (data) => {
+      this.tagData = data;
     }).catch(() => {
       alert("Error occured");
     });
@@ -100,16 +123,14 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
   }
 
   private getTodaysTotalExpense() {
-    this.expense.getTodaysTotalExpense().then((response) => {
-      this.model.todaysTotalExpense = response;
-    }, () => {
-      this.model.todaysTotalExpense = 0;
-    });
+
   }
+
+
 
   public submitInput() {
     if (this.model.description !== "") {
-      this.file.writeFile(this.file.getCurrentDataFileName(), JSON.stringify(this.model), "data").then((res) => {
+      this.file.writeFile(this.file.getCurrentDataFileName(), JSON.stringify(this.model)).then((res) => {
         if (res) {
           alert("Succesfully submitted data");
           this.resetInputs();
@@ -128,12 +149,7 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
   }
 
   public checkIfAlertExistsAndMakechanges(): void {
-    this.alertHandler.checkIfAlertFileExists().then((response) => {
-      $("#div_alertDiv").show();
-      this.prepareAlertData(response);
-    }, () => {
-      $("#div_alertDiv").hide();
-    });
+
   }
 
   private prepareAlertData(textData: string): void {
@@ -166,9 +182,18 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
 
   ngAfterViewInit() {
     window.setTimeout(() => {
+      this.file.checkAndCreateInitialDirectories().then(() => {
+        alert("success");
+      }).catch(() => {
+        alert("failed");
+      });
+    }, 1000);
+    window.setTimeout(() => {
       this.getTodaysTotalExpense();
       this.checkIfAlertExistsAndMakechanges();
-    }, 1500);
+      this.loadTags();
+      this.loadNumbers();
+    }, 2000);
 
   }
 

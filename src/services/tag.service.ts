@@ -10,7 +10,7 @@ export class TagService {
     }
     public getTagData(): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.file.readFile("tag-data-json", "config").then((response) => {
+            this.file.readFile("tag-data-json").then((response) => {
                 // file exists returning data from file
                 resolve(JSON.parse(response));
             }, () => {
@@ -64,12 +64,12 @@ export class TagService {
                 }
             
             ]`;
-                this.file.writeFile("tag-data-json", data, "config", "config").then(() => {
+                this.file.writeFile("tag-data-json", data).then(() => {
                     // file write done
                     resolve(JSON.parse(data));
                 }, () => {
                     // unable to write file
-                    reject();
+                    reject(JSON.parse(data));
                 })
 
             });
@@ -83,14 +83,14 @@ export class TagService {
     public updateTagName(oldTagName: string, newTagName: string): Promise<any> {
         newTagName = newTagName.charAt(0).toUpperCase() + newTagName.slice(1).toLowerCase()
         return new Promise((resolve, reject) => {
-            this.file.readFile("tag-data-json", "config").then((response) => {
+            this.file.readFile("tag-data-json").then((response) => {
                 let presentTagData = JSON.parse(response);
                 for (let index = 0; index < presentTagData.length; index++) {
                     if (presentTagData[index].name === oldTagName) {
                         presentTagData[index].name = newTagName;
                     }
                 }
-                this.file.writeFile("tag-data-json", JSON.stringify(presentTagData), "config", "config").then(() => {
+                this.file.writeFile("tag-data-json", JSON.stringify(presentTagData)).then(() => {
                     resolve();
                 }).catch(() => {
                     reject();
