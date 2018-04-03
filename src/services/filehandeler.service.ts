@@ -3,11 +3,16 @@ import { File } from '@ionic-native/file';
 import { Platform } from 'ionic-angular';
 
 const rootFolderName = "SmallExpensePro";
+const dataListFileName = "FileList.list";
 
 @Injectable()
 export class FileHandeler {
     constructor(private file: File, private platform: Platform) {
         this.checkAndSetPlatform();
+    }
+
+    public getListFileName(): string {
+        return dataListFileName;
     }
 
     private checkAndSetPlatform() {
@@ -18,14 +23,14 @@ export class FileHandeler {
         }
     }
 
-    public getDataFileName(date?: "string"): string {
+    public getDataFileName(date?: string): string {
         let today = new Date();
         let dateString: string;
         if(typeof date === "undefined") {
             dateString = (today.getDate()).toString() + '-' + (today.getMonth() + 1).toString() + '-' + today.getFullYear().toString()+".data";
         } else {
             let dateObject = new Date(date);
-            dateString = (dateObject.getDate()).toString() + '-' + (dateObject.getMonth() + 1).toString() + '-' + dateObject.getFullYear().toString()+".data";
+            dateString = (dateObject.getMonth()+1).toString() + '-' + (dateObject.getDate()).toString() + '-' + dateObject.getFullYear().toString()+".data";
         }
         
         return dateString;
@@ -36,16 +41,19 @@ export class FileHandeler {
         return new Promise((resolve, reject) => {
             this.file.checkDir(this.file.dataDirectory, rootFolderName).then(() => {
                 // root directory exists
-                resolve(prepareMessageData);
+                resolve();
             }).catch(() => {
                 // root directory doesnot exists, so creating
                 this.file.createDir(this.file.dataDirectory, rootFolderName, false).then(() => {
+                    this.file.writeFile(this.getPath(), dataListFileName, "[]").then(() => {
+                        resolve();
+                    }).catch(() => {
+                        reject();
+                    });
                     // root directory created successfully
-                    prepareMessageData = true;
-                    resolve(prepareMessageData);
+                    
                 }).catch((message) => {
                     // root directory creation failed
-                    alert(JSON.stringify(message));
                     reject();
 
                 });

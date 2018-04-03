@@ -5,6 +5,7 @@ import { Platform } from 'ionic-angular';
 import * as $ from 'jquery';
 
 import { FileHandeler } from './../../services/filehandeler.service';
+import { ExpenseService } from './../../services/expense.service';
 import { TagService } from './../../services/tag.service';
 import { Events } from 'ionic-angular';
 
@@ -20,7 +21,7 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
   public numberData: any;
   private model: any;
   private alert: any;
-  constructor(public navCtrl: NavController, private tagService: TagService, private file: FileHandeler, private event: Events, private platform: Platform) {
+  constructor(public navCtrl: NavController, private tagService: TagService, private file: FileHandeler, private event: Events, private platform: Platform, private expense: ExpenseService) {
 
     this.model = {
       reason: "",
@@ -37,10 +38,9 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
     //   this.refreshHomePageView();
     // });
     this.platform.ready().then(() => {
+      this.loadNumbers();
       this.file.checkAndCreateInitialDirectories().then(() => {
         this.getTodaysTotalExpense();
-        this.checkIfAlertExistsAndMakechanges();
-        this.loadNumbers();
         this.loadTags();
       }).catch(() => {
 
@@ -133,24 +133,20 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
   }
 
   private getTodaysTotalExpense() {
-
+    this.expense.getTotalExpenseOfGivenDate().then((data) => {
+      this.model.todaysTotalExpense = data;
+    }).catch(() => { });
   }
 
 
 
   public submitInput() {
     if (this.model.description !== "") {
-      this.file.writeFile(this.file.getDataFileName(), JSON.stringify(this.model)).then((res) => {
-        if (res) {
-          alert("Succesfully submitted data");
-          this.resetInputs();
-          this.getTodaysTotalExpense();
-          this.checkIfAlertExistsAndMakechanges();
-        } else {
-          alert("Data submit failed");
-        }
-
-      }, () => {
+      this.expense.submitExpense(this.model.amount, this.model.reason).then(() => {
+        alert("Succesfully submitted data");
+        this.resetInputs();
+        this.getTodaysTotalExpense();
+      }).catch(() => {
         alert("Data submit failed");
       });
     } else {

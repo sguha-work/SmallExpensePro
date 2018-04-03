@@ -8,13 +8,14 @@ import { MyApp } from './app.component';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {File} from '@ionic-native/file';
-//import {HttpModule} from '@angular/http';
 import { DatePicker } from '@ionic-native/date-picker';
 import { EmailComposer } from '@ionic-native/email-composer';
 
 // importing self created services
 import { FileHandeler } from './../services/filehandeler.service';
 import { TagService } from './../services/tag.service';
+import { Common } from './../services/common.service';
+import { ExpenseService } from './../services/expense.service';
 
 
 // importing self created pages
@@ -76,7 +77,8 @@ import { SignupPage } from '../pages/signup/signup';
     TagService,
     
     FileHandeler,
-    
+    Common,
+    ExpenseService,
     DatePicker,
     Events
   ]
