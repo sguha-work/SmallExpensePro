@@ -51,9 +51,14 @@ export class Common {
         return data;
     }
 
-    public getSupprtedDateFromDateString(date: string): string {
+    public getSupprtedDateFromDateString(date?: string): string {
         let supportedDate: string;
-        let today = new Date(date);
+        let today;
+        if(typeof date === "undefined") {
+            today = new Date();
+        } else {
+            today = new Date(date);
+        }
         supportedDate = (today.getDate()).toString() + '-' + (today.getMonth() + 1).toString() + '-' + today.getFullYear().toString();
         return supportedDate;
     }
