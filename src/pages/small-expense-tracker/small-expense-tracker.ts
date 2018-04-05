@@ -21,7 +21,7 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
 
   public tagData: any;
   public numberData: any;
-  private model: any;
+  public model: any;
   private alert: any;
   constructor(private common: Common, private datePicker: DatePicker, public navCtrl: NavController, private tagService: TagService, private file: FileHandeler, private event: Events, private platform: Platform, private expense: ExpenseService) {
 

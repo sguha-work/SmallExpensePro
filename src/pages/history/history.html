@@ -2,10 +2,41 @@
     <h3 id="smallExpenseTracker-heading3" style="color:#67E79A;text-align:center;">
         Small Expense tracker
     </h3>
-    <h4>
-        Tap to see last 7 days history
+    <h4 (click)="displayDatePicker()">
+        Tap to select date to show history
     </h4>
     <h4>
         Tap to see last 7 days history
     </h4>
+    <h4>
+        Tap to see last 30 days history
+    </h4>
+    
+    <p>Following table will show expenses list</p>
+    <table *ngIf="model.expenses.length > 0" class="table_expenses">
+        <tr>
+            <td>
+                <b>Expense for</b>
+            </td>
+            <td>
+                <b>Amount</b>
+            </td>
+            <td>
+                <b>Description</b>
+            </td>
+        </tr>
+        <tr *ngFor="let expense of model.expenses">
+            <td>
+               {{expense.reason}} 
+            </td>
+            <td>
+                {{expense.amount}}
+            </td>
+            <td>
+                {{expense.description}}
+            </td>
+        </tr>
+    </table>
+    <label *ngIf="model.expenses.length === 0"><b>No data to display till now</b></label>
+
 </ion-content>
