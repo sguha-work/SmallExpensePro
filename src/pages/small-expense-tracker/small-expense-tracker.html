@@ -9,7 +9,7 @@
                 {{model.todaysTotalExpense}}
             </strong> rupees so far.
         </p>
-        <p>Expense date <label style="font-weight:bold" (click)="displayDatePicker()">{{date}}</label>&nbsp;( to change date tap on date )</p>
+        <p>Expense date <label style="font-weight:bold" (click)="displayDatePicker()">{{model.date}}</label>&nbsp;( to change date tap on date )</p>
     </div>
     <div id="home-markdown1" class="show-list-numbers-and-dots">
         <p style="color:#000000; margin: 0; margin-bottom: 3px; padding: 0;">
@@ -66,4 +66,5 @@
             </td>
         </tr>
     </table>
+    <label *ngIf="model.todaysExpenses.length === 0"><b>No data to display till now</b></label>
 </ion-content>

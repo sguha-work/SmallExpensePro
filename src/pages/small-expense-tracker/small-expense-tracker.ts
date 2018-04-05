@@ -23,18 +23,18 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
   public numberData: any;
   private model: any;
   private alert: any;
-  private date: any;
   constructor(private common: Common, private datePicker: DatePicker, public navCtrl: NavController, private tagService: TagService, private file: FileHandeler, private event: Events, private platform: Platform, private expense: ExpenseService) {
 
-    this.date = this.common.getSupprtedDateFromDateString();
     this.model = {
       reason: "",
       amount: "",
       description: "",
       time: "",
       todaysTotalExpense: 0,
-      todaysExpenses: []
+      todaysExpenses: [],
+      date: ""
     };
+    this.model.date = this.common.getSupprtedDateFromDateString();
     this.alert = {};
     this.alert.safeAmount = 0;
     // this.event.subscribe('file:data:updated', () => {
@@ -67,7 +67,7 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
     });
   }
   public dateSelected(date: any): void {
-    this.date = this.common.getSupprtedDateFromDateString(date);
+    this.model.date = this.common.getSupprtedDateFromDateString(date);
 
   }
 
@@ -151,7 +151,7 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
     $("ion-item[data-item='tag']").removeClass('active');
     this.model.reason = "";
     this.model.description = "";
-    this.date = this.common.getSupprtedDateFromDateString();
+    this.model.date = this.common.getSupprtedDateFromDateString();
   }
 
   private getTodaysTotalExpense() {
@@ -170,7 +170,7 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
 
   public submitInput() {
     if (this.model.description !== "") {
-      this.expense.submitExpense(this.model.amount, this.model.reason, this.model.description).then(() => {
+      this.expense.submitExpense(this.model.amount, this.model.reason, this.model.description, this.model.date).then(() => {
         alert("Succesfully submitted data");
         this.resetInputs();
         window.scrollBy(0, -100);
