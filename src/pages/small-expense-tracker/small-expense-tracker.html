@@ -2,7 +2,6 @@
     <h3 id="smallExpenseTracker-heading3" style="color:#67E79A;text-align:center;">
         Small Expense tracker
     </h3>
-    <p>Select type of expense, enter amount and press submit</p>
     <div id="home-markdown1" class="show-list-numbers-and-dots">
         <p style="color:#000000; margin: 0; margin-bottom: 3px; padding: 0;">
             Today's expense &nbsp;
@@ -10,29 +9,8 @@
                 {{model.todaysTotalExpense}}
             </strong> rupees so far.
         </p>
-        <p style="cursor: pointer" id="" (click)="displayDatePicker()">
-            Want to change date then tap here and select date
-        </p>
-        <p>Expense date <label style="font-weight:bold">{{date}}</label></p>
+        <p>Expense date <label style="font-weight:bold" (click)="displayDatePicker()">{{date}}</label>&nbsp;( to change date tap on date )</p>
     </div>
-    <!-- <div id="div_alertDiv" class="show-list-numbers-and-dots">
-        <p style="color:#000000; margin: 0; padding: 0; margin-bottom: 2px;">
-            Daily expense limit is
-            <strong style=" font-size: 20px;">{{alert.alertAmount}}</strong> rupees
-
-
-            <label *ngIf="!alert.showAlert" style="color:#000000; margin: 0; padding: 0;">
-                You can still spent
-                <strong style=" font-size: 20px;">{{alert.safeAmount}}</strong> rupees
-
-            </label>
-            <label *ngIf="alert.showAlert" style="color:#000000; margin: 0; padding: 0;">
-                You spent
-                <strong style="color: red; font-size: 20px;">{{alert.extraSpent}} </strong> rupees extra beyond limit
-
-            </label>
-        </p>
-    </div> -->
     <div id="home-markdown1" class="show-list-numbers-and-dots">
         <p style="color:#000000; margin: 0; margin-bottom: 3px; padding: 0;">
             <strong>

@@ -31,7 +31,8 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
       reason: "",
       amount: "",
       description: "",
-      time: ""
+      time: "",
+      todaysTotalExpense: 0
     };
     this.alert = {};
     this.alert.safeAmount = 0;
@@ -65,7 +66,7 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
   }
   public dateSelected(date: any): void {
     this.date = this.common.getSupprtedDateFromDateString(date);
-    
+
   }
 
   private refreshHomePageView() {
@@ -148,6 +149,7 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
     $("ion-item[data-item='tag']").removeClass('active');
     this.model.reason = "";
     this.model.description = "";
+    this.date = this.common.getSupprtedDateFromDateString();
   }
 
   private getTodaysTotalExpense() {
@@ -163,9 +165,11 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
       this.expense.submitExpense(this.model.amount, this.model.reason).then(() => {
         alert("Succesfully submitted data");
         this.resetInputs();
+        window.scrollBy(0, -100);
         this.getTodaysTotalExpense();
       }).catch(() => {
         alert("Data submit failed");
+        window.scrollBy(0, -100);
       });
     } else {
       alert("Nothing to submit");
@@ -205,13 +209,6 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    window.setTimeout(() => {
-
-    }, 100);
-    window.setTimeout(() => {
-
-
-    }, 500);
 
   }
 
