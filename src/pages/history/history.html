@@ -11,10 +11,16 @@
     <h4>
         Tap to see last 30 days history
     </h4>
-    
+
     <p>Following table will show expenses list</p>
+    <p *ngIf="model.expenses.length > 0">Total expense of given date is
+        <b>{{model.totalExpenseOfGivenDate}}</b>
+    </p>
     <table *ngIf="model.expenses.length > 0" class="table_expenses">
         <tr>
+            <td>
+                <b>Date</b>
+            </td>
             <td>
                 <b>Expense for</b>
             </td>
@@ -27,7 +33,10 @@
         </tr>
         <tr *ngFor="let expense of model.expenses">
             <td>
-               {{expense.reason}} 
+                {{expense.date}}
+            </td>
+            <td>
+                {{expense.reason}}
             </td>
             <td>
                 {{expense.amount}}
@@ -37,6 +46,8 @@
             </td>
         </tr>
     </table>
-    <label *ngIf="model.expenses.length === 0"><b>No data to display till now</b></label>
+    <label *ngIf="model.expenses.length === 0">
+        <b>No data to display till now</b>
+    </label>
 
 </ion-content>

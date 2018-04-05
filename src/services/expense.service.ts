@@ -12,7 +12,7 @@ export class ExpenseService {
             amount: amount,
             reason: tag,
             description: description,
-            dateTime: (typeof date === "undefined")?Date.now():this.common.getTimeStampFromDate(date)
+            date: (typeof date === "undefined")?this.common.getSupprtedDateFromDateString():date
         }
         return object;
     }
@@ -21,7 +21,7 @@ export class ExpenseService {
     public submitExpense(amount: number, tag: string, description: string, date?: string) {
         return new Promise((resolve, reject) => {
             let object = this.getExpenseObject(amount, tag, description, date);
-            let fileName = this.file.getDataFileName();
+            let fileName = this.file.getDataFileName(date);
             this.file.checkIfFileExists(fileName).then((dataFromFile) => {
                 let dataArray = JSON.parse(dataFromFile);
                 dataArray.push(object);

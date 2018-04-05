@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { File } from '@ionic-native/file';
 import { Platform } from 'ionic-angular';
 
+import {Common} from './common.service';
 const rootFolderName = "SmallExpensePro";
 const dataListFileName = "FileList.list";
 
 @Injectable()
 export class FileHandeler {
-    constructor(private file: File, private platform: Platform) {
+    constructor(private file: File, private platform: Platform, private common: Common) {
         this.checkAndSetPlatform();
     }
 
@@ -27,10 +28,9 @@ export class FileHandeler {
         let today = new Date();
         let dateString: string;
         if(typeof date === "undefined") {
-            dateString = (today.getDate()).toString() + '-' + (today.getMonth() + 1).toString() + '-' + today.getFullYear().toString()+".data";
+            dateString = this.common.getSupprtedDateFromDateString()+".data";
         } else {
-            let dateObject = new Date(date);
-            dateString = (dateObject.getMonth()+1).toString() + '-' + (dateObject.getDate()).toString() + '-' + dateObject.getFullYear().toString()+".data";
+            dateString = date + ".data";
         }
         
         return dateString;
@@ -100,14 +100,14 @@ export class FileHandeler {
                 this.file.writeExistingFile(directoryPath, fileName, data).then(() => {
                     resolve();
                 }).catch((error) => {
-                    reject();
+                    reject(error);
                 });
             }).catch(() => {
                 // file doesn't exists writing
                 this.file.writeFile(directoryPath, fileName, data).then(() => {
                     resolve();
                 }).catch((error) => {
-                    reject();
+                    reject(error);
                 });
             });
         });

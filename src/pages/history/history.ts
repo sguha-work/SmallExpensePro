@@ -18,13 +18,22 @@ export class HistoryPage {
   
   constructor(private common: Common, private datePicker: DatePicker, public navCtrl: NavController, private tagService: TagService, private file: FileHandeler, private event: Events,  private expense: ExpenseService) {
     this.model = {
-      expenses: []
+      expenses: [],
+      totalExpenseOfGivenDate: 0
     };
+  }
+
+  private loadExpensesByDate(date: string) {
+    this.expense.getAllExpensesOfGivenDate(date).then((expenseData) => {
+      this.model.expenses = expenseData;
+    }).catch(() => {
+      this.model.expenses = [];
+    });
   }
 
   public dateSelected(date: any): void {
     this.model.date = this.common.getSupprtedDateFromDateString(date);
-
+    this.loadExpensesByDate(this.model.date);
   }
   
   displayDatePicker(): void {

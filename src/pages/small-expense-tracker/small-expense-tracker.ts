@@ -37,12 +37,6 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
     this.model.date = this.common.getSupprtedDateFromDateString();
     this.alert = {};
     this.alert.safeAmount = 0;
-    // this.event.subscribe('file:data:updated', () => {
-    //   this.refreshHomePageView();
-    // });
-    // this.event.subscribe('file:config:updated', () => {
-    //   this.refreshHomePageView();
-    // });
     this.platform.ready().then(() => {
       this.loadNumbers();
       this.file.checkAndCreateInitialDirectories().then(() => {
@@ -123,8 +117,11 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
 
   private checkAndPrepareDescription(): void {
     if (this.model.reason !== "" && this.model.amount !== "") {
-      let date = Date();
+      let date = this.model.date;
       this.model.description = "Spent Rs " + this.model.amount + " in " + this.model.reason + " on " + date;
+      if(this.common.getSupprtedDateFromDateString() === this.model.date) {
+        this.model.description += "at "+(new Date()).getHours()+":"+(new Date()).getMinutes();
+      }
       this.model.time = Date.now();
     }
   }
@@ -161,7 +158,7 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
   }
 
   private populateTodaysExpenses() {
-    this.expense.getAllExpensesOfGivenDate().then((dataFromFile) => {alert(JSON.stringify(dataFromFile));
+    this.expense.getAllExpensesOfGivenDate().then((dataFromFile) => {
       this.model.todaysExpenses = dataFromFile;
     }).catch(() => {
 
@@ -206,7 +203,7 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
   }
 
   public changeTagTitle(tagName: string) {
-    let newTagName = window.prompt("Enter new tag name. Previous was " + tagName);
+    let newTagName = window.prompt("Enter new tag name. Previous was '" + tagName + "'");
     if (newTagName.trim() !== "" && newTagName.toLowerCase() !== tagName.toLowerCase()) {
       this.tagService.updateTagName(tagName, newTagName).then(() => {
         alert("Tag updated");
