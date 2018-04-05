@@ -41,4 +41,29 @@
     <button (click)="resetInputs()" ion-button color="assertive" block>
         Tap me to reset
     </button>
+    <p>Following table will show today's expenses</p>
+    <table *ngIf="model.todaysExpenses.length > 0" class="table_expenses">
+        <tr>
+            <td>
+                <b>Expense for</b>
+            </td>
+            <td>
+                <b>Amount</b>
+            </td>
+            <td>
+                <b>Description</b>
+            </td>
+        </tr>
+        <tr *ngFor="let expense of model.todaysExpenses">
+            <td>
+               {{expense.reason}} 
+            </td>
+            <td>
+                {{expense.amount}}
+            </td>
+            <td>
+                {{expense.description}}
+            </td>
+        </tr>
+    </table>
 </ion-content>

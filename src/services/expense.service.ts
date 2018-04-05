@@ -7,19 +7,20 @@ export class ExpenseService {
     constructor(private file: FileHandeler, private common: Common) {
 
     }
-    private getExpenseObject(amount: number, tag: string, date?: string): any {
+    private getExpenseObject(amount: number, tag: string, description:string, date?: string): any {
         let object = {
             amount: amount,
             reason: tag,
+            description: description,
             dateTime: (typeof date === "undefined")?Date.now():this.common.getTimeStampFromDate(date)
         }
         return object;
     }
 
     /** */
-    public submitExpense(amount: number, tag: string, date?: string) {
+    public submitExpense(amount: number, tag: string, description: string, date?: string) {
         return new Promise((resolve, reject) => {
-            let object = this.getExpenseObject(amount, tag, date);
+            let object = this.getExpenseObject(amount, tag, description, date);
             let fileName = this.file.getDataFileName();
             this.file.checkIfFileExists(fileName).then((dataFromFile) => {
                 let dataArray = JSON.parse(dataFromFile);

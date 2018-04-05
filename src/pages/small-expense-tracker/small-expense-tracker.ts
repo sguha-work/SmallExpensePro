@@ -32,7 +32,8 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
       amount: "",
       description: "",
       time: "",
-      todaysTotalExpense: 0
+      todaysTotalExpense: 0,
+      todaysExpenses: []
     };
     this.alert = {};
     this.alert.safeAmount = 0;
@@ -46,6 +47,7 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
       this.loadNumbers();
       this.file.checkAndCreateInitialDirectories().then(() => {
         this.getTodaysTotalExpense();
+        this.populateTodaysExpenses();
         this.loadTags();
       }).catch(() => {
 
@@ -158,15 +160,22 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
     }).catch(() => { });
   }
 
+  private populateTodaysExpenses() {
+    this.expense.getAllExpensesOfGivenDate().then((dataFromFile) => {alert(JSON.stringify(dataFromFile));
+      this.model.todaysExpenses = dataFromFile;
+    }).catch(() => {
 
+    });
+  }
 
   public submitInput() {
     if (this.model.description !== "") {
-      this.expense.submitExpense(this.model.amount, this.model.reason).then(() => {
+      this.expense.submitExpense(this.model.amount, this.model.reason, this.model.description).then(() => {
         alert("Succesfully submitted data");
         this.resetInputs();
         window.scrollBy(0, -100);
         this.getTodaysTotalExpense();
+        this.populateTodaysExpenses();
       }).catch(() => {
         alert("Data submit failed");
         window.scrollBy(0, -100);
