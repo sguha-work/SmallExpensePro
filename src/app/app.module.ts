@@ -16,6 +16,8 @@ import { FileHandeler } from './../services/filehandeler.service';
 import { TagService } from './../services/tag.service';
 import { Common } from './../services/common.service';
 import { ExpenseService } from './../services/expense.service';
+import {UserService} from './../services/user.service';
+import {DatabaseService} from './../services/database.service';
 
 
 // importing self created pages
@@ -77,6 +79,8 @@ import { SignupPage } from '../pages/signup/signup';
     TagService,
     
     FileHandeler,
+    UserService,
+    DatabaseService,
     Common,
     ExpenseService,
     DatePicker,
