@@ -24,7 +24,9 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
   public model: any;
   private alert: any;
   constructor(private common: Common, private datePicker: DatePicker, public navCtrl: NavController, private tagService: TagService, private file: FileHandeler, private event: Events, private platform: Platform, private expense: ExpenseService) {
-
+    $("ion-app").css({
+      "visibility": "hidden"
+    });
     this.model = {
       reason: "",
       amount: "",
@@ -42,7 +44,11 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
       this.file.checkAndCreateInitialDirectories().then(() => {
         this.getTodaysTotalExpense();
         this.populateTodaysExpenses();
-        this.loadTags();
+        this.loadTags().then(() => {
+          $("ion-app").removeAttr("style");
+        }).catch(() => {
+
+        });
       }).catch(() => {
 
       });
@@ -56,6 +62,7 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
       doneButtonLabel: "OK",
       cancelButtonLabel: "Cancel",
       androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK,
+      maxDate: Date.parse(new Date().toString())
     }).then((date) => {
       this.dateSelected(date);
     });
@@ -105,14 +112,19 @@ export class SmallExpenseTrackerPage implements AfterViewInit {
     ]`);
   }
 
-  private loadTags(): void {
-    this.tagService.getTagData().then((data) => {
-      this.tagData = data;
-    }, (data) => {
-      this.tagData = data;
-    }).catch(() => {
-      alert("Error occured");
+  private loadTags(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.tagService.getTagData().then((data) => {
+        this.tagData = data;
+        resolve();
+      }, (data) => {
+        this.tagData = data;
+        resolve();
+      }).catch(() => {
+        reject();
+      });
     });
+    
   }
 
   private checkAndPrepareDescription(): void {
