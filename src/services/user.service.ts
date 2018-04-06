@@ -19,8 +19,8 @@ export class UserService {
                 } else {
                     resolve(value);
                 }
-            }).catch(() => {
-                reject();
+            }).catch((error) => {
+                reject(error);
             });
         });
     }
@@ -49,7 +49,6 @@ export class UserService {
                     reject();
                 });
             }).catch((error) => {
-                alert(error);
                 reject();
             });
         });

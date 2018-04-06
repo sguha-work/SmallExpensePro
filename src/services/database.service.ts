@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import { FileHandeler } from './filehandeler.service';
 import { Platform } from 'ionic-angular';
 
-let firebase;
+declare var firebase;
 
 @Injectable()
 export class DatabaseService {
     private db: any;
     constructor(private file: FileHandeler, private platform: Platform) {
         platform.ready().then(() => {
-            this.db = firebase.database();
+            
+                this.db = firebase.database();
+            
         });
         
     }
@@ -20,7 +22,7 @@ export class DatabaseService {
             this.db.ref('/'+key).set(data).then(() => {
                 resolve();
             }).catch((error) => {
-                reject();
+                reject(error);
             });
        });
     }
@@ -30,7 +32,7 @@ export class DatabaseService {
             this.db.ref('/'+key).update(data).then(() => {
                 resolve();
             }).catch((error) => {
-                reject();
+                reject(error);
             });
        });
     }

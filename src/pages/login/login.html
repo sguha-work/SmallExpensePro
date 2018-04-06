@@ -1,30 +1,30 @@
 <ion-content padding id="page5" style="background-color:#4480E9;">
-  <form id="login-form1">
-    <h1 id="login-heading1" style="color:#67E79A;text-align:center;">
-      Login/Signup
-    </h1>
-    <p>In case of new user, he/she will be signed up autometically</p>
-    <img src="assets/img/xGjbTLNzTaCzpZqT0XpN_icon.png" style="display:block;width:35%;height:auto;margin-left:auto;margin-right:auto;" />
-    <div class="spacer" style="height:40px;" id="login-spacer1"></div>
-    <ion-item id="login-input1">
-      <ion-label>
-        Email
-      </ion-label>
-      <ion-input type="email" placeholder=""></ion-input>
-    </ion-item>
-    <!-- <div style="width:100%;height:220px;margin:0px 0px;line-height:250px;background-color:#e8ebef;text-align:center;">
+
+  <h1 id="login-heading1" style="color:#67E79A;text-align:center;">
+    Login/Signup
+  </h1>
+  <p>In case of new user, he/she will be signed up autometically</p>
+  <img src="assets/img/xGjbTLNzTaCzpZqT0XpN_icon.png" style="display:block;width:35%;height:auto;margin-left:auto;margin-right:auto;"
+  />
+  <div class="spacer" style="height:40px;" id="login-spacer1"></div>
+  <ion-item id="login-input1">
+    <ion-label>
+      Email
+    </ion-label>
+    <ion-input type="email" placeholder="" [(ngModel)]="model.email"></ion-input>
+  </ion-item>
+  <!-- <div style="width:100%;height:220px;margin:0px 0px;line-height:250px;background-color:#e8ebef;text-align:center;">
       <i class="icon ion-image" style="font-size:64px;color:#888;vertical-align:middle;"></i>
     </div> -->
-    <div class="spacer" style="height:10px;" id="login-spacer7"></div>
-    <ion-item id="login-input2">
-      <ion-label>
-        Password
-      </ion-label>
-      <ion-input type="password" placeholder=""></ion-input>
-    </ion-item>
-    <div class="spacer" style="height:40px;" id="login-spacer3"></div>
-    <button id="login-button1" ion-button color="royal" block>
-      Log in
-    </button>
-  </form>
+  <div class="spacer" style="height:10px;" id="login-spacer7"></div>
+  <ion-item id="login-input2">
+    <ion-label>
+      Password
+    </ion-label>
+    <ion-input type="password" placeholder="" [(ngModel)]="model.password"></ion-input>
+  </ion-item>
+  <div class="spacer" style="height:40px;" id="login-spacer3"></div>
+  <button id="login-button1" ion-button color="royal" (click)="callDatabase()" block>
+    Log in
+  </button>
 </ion-content>
