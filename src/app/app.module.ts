@@ -6,7 +6,6 @@ import { MyApp } from './app.component';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
 import {File} from '@ionic-native/file';
 import { DatePicker } from '@ionic-native/date-picker';
 import { EmailComposer } from '@ionic-native/email-composer';
@@ -71,7 +70,6 @@ import { SignupPage } from '../pages/signup/signup';
   ],
   providers: [
     StatusBar,
-    SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     File,
     EmailComposer,

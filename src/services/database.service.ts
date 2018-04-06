@@ -27,6 +27,16 @@ export class DatabaseService {
        });
     }
 
+    public push(key: string, data: any): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.db.ref('/'+key).push(data).then(() => {
+                resolve();
+            }).catch((error) => {
+                reject(error);
+            });
+       });
+    }
+
     public update(key: string, data: any): Promise<any> {
         return new Promise((resolve, reject) => {
             this.db.ref('/'+key).update(data).then(() => {

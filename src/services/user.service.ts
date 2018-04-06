@@ -11,13 +11,41 @@ export class UserService {
         
     }
 
-    public checkIfUserExists(email: string): Promise<any> {
+    public checkIfUserExists(phoneNumber: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.database.get("users/"+email).then((value) => {
+            this.database.get(phoneNumber+"/active/").then((value) => {
                 if(value==null) {
                     reject();
                 } else {
                     resolve(value);
+                }
+            }).catch((error) => {
+                reject(error);
+            });
+        });
+    }
+
+    public login(phoneNumber: string, password: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.database.get(phoneNumber+"/password/").then((dataFromDB) => {
+                if(dataFromDB==null) {
+                    reject();
+                } else {
+                    if(password == atob(dataFromDB)) {
+                        let userObject = {
+                            "phoneNumber": phoneNumber,
+                            "password": btoa(password),
+                            "active": true
+                        };
+                        this.file.writeFile(JSON.stringify(userObject), userFileName).then(() => {
+                            resolve();
+                        }).catch(() => {
+                            reject();
+                        });
+                        
+                    } else {
+                        reject();
+                    }
                 }
             }).catch((error) => {
                 reject(error);
@@ -35,21 +63,22 @@ export class UserService {
         });
     }
 
-    public addUser(email: string, password: string): Promise<any> {
+    public addUser(phoneNumber: string, password: string): Promise<any> {
         return new Promise((resolve, reject) => {
             // adding user to database
-            this.database.set("users/"+email, {"password": btoa(password)}).then(() => {
+            this.database.set(phoneNumber, {"password": btoa(password), "active": true}).then(() => {
                 let userObject = {
-                    "email": email,
-                    "password": btoa(password) 
+                    "phoneNumber": phoneNumber,
+                    "password": btoa(password),
+                    "active": true
                 };
                 this.file.writeFile(JSON.stringify(userObject), userFileName).then(() => {
                     resolve();
-                }).catch(() => {
-                    reject();
+                }).catch((error) => { 
+                    reject(error);
                 });
             }).catch((error) => {
-                reject();
+                reject(error);
             });
         });
     }
